@@ -1,72 +1,118 @@
-[
-  {
-    "name": "Steven Stamkos",
-    "season": "2014-2015",
-    "goals": 43,
-    "assists": 29,
-    "games": 82
-  },
-  {
-    "name": "Steven Stamkos",
-    "season": "2015-2016",
-    "goals": 28,
-    "assists": 36,
-    "games": 77
-  },
-  {
-    "name": "Steven Stamkos",
-    "season": "2016-2017",
-    "goals": 9,
-    "assists": 11,
-    "games": 17
-  },
-  {
-    "name": "Steven Stamkos",
-    "season": "2017-2018",
-    "goals": 27,
-    "assists": 59,
-    "games": 78
-  },
-  {
-    "name": "Steven Stamkos",
-    "season": "2018-2019",
-    "goals": 45,
-    "assists": 53,
-    "games": 82
-  },
-  {
-    "name": "Steven Stamkos",
-    "season": "2019-2020",
-    "goals": 29,
-    "assists": 37,
-    "games": 57
-  },
-  {
-    "name": "Steven Stamkos",
-    "season": "2020-2021",
-    "goals": 17,
-    "assists": 17,
-    "games": 38
-  },
-  {
-    "name": "Steven Stamkos",
-    "season": "2021-2022",
-    "goals":42,
-    "assists": 64,
-    "games": 81
-  },
-  {
-    "name": "Steven Stamkos",
-    "season": "2022-2023",
-    "goals": 34,
-    "assists": 50,
-    "games": 81
-  },
-  {
-    "name": "Steven Stamkos",
-    "season": "2023-2024",
-    "goals": 40,
-    "assists": 41,
-    "games": 79
-  }
-]
+{
+ "long":  [
+   {
+     "name": "Steven Stamkos",
+     "season": "2014-2015",
+     "goals": 43,
+     "assists": 29,
+     "games": 82
+   },
+   {
+     "name": "Steven Stamkos",
+     "season": "2015-2016",
+     "goals": 28,
+     "assists": 36,
+     "games": 77
+   },
+   {
+     "name": "Steven Stamkos",
+     "season": "2016-2017",
+     "goals": 9,
+     "assists": 11,
+     "games": 17
+   },
+   {
+     "name": "Steven Stamkos",
+     "season": "2017-2018",
+     "goals": 27,
+     "assists": 59,
+     "games": 78
+   },
+   {
+     "name": "Steven Stamkos",
+     "season": "2018-2019",
+     "goals": 45,
+     "assists": 53,
+     "games": 82
+   },
+   {
+     "name": "Steven Stamkos",
+     "season": "2019-2020",
+     "goals": 29,
+     "assists": 37,
+     "games": 57
+   },
+   {
+     "name": "Steven Stamkos",
+     "season": "2020-2021",
+     "goals": 17,
+     "assists": 17,
+     "games": 38
+   },
+   {
+     "name": "Steven Stamkos",
+     "season": "2021-2022",
+     "goals":42,
+     "assists": 64,
+     "games": 81
+   },
+   {
+     "name": "Steven Stamkos",
+     "season": "2022-2023",
+     "goals": 34,
+     "assists": 50,
+     "games": 81
+   },
+   {
+     "name": "Steven Stamkos",
+     "season": "2023-2024",
+     "goals": 40,
+     "assists": 41,
+     "games": 79
+   }
+ ],
+  "short" : [
+    {
+      "name": "Steven Stamkos",
+      "season": "2014-2015",
+      "goals": 43,
+      "assists": 29,
+      "games": 82
+    },
+    {
+      "name": "Steven Stamkos",
+      "season": "2015-2016",
+      "goals": 28,
+      "assists": 36,
+      "games": 77
+    },
+    {
+      "name": "Steven Stamkos",
+      "season": "2016-2017",
+      "goals": 9,
+      "assists": 11,
+      "games": 17
+    },
+    {
+      "name": "Steven Stamkos",
+      "season": "2017-2018",
+      "goals": 27,
+      "assists": 59,
+      "games": 78
+    },
+    {
+      "name": "Steven Stamkos",
+      "season": "2018-2019",
+      "goals": 45,
+      "assists": 53,
+      "games": 82
+    },
+    {
+      "name": "Steven Stamkos",
+      "season": "2019-2020",
+      "goals": 29,
+      "assists": 37,
+      "games": 57
+    }
+  ]
+}

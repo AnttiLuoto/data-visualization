@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import TooltipSeasonStats from "./TooltipSeasonStats.jsx";
 
 const BarChart = ({data, playerAttribute}) => {
-    console.log(data)
+    // console.log(data)
 
     const ref = useRef();
 
@@ -22,17 +22,20 @@ const BarChart = ({data, playerAttribute}) => {
             .attr('width', svgWidth)
             .attr('height', svgHeight)
 
-        // Clear previous elements
-        svg.selectAll('*').remove();
-
-        // Add title
-        svg.append('text')
+        // Add or update title
+        const title = svg.selectAll('.title').data([playerAttribute]);
+        title.enter()
+            .append('text')
+            .attr('class', 'title')
             .attr('x', svgWidth * 0.1)
             .attr('y', svgHeight * 0.05)
+            .merge(title)
             .text(playerAttribute)
             .attr('text-anchor', 'middle')
             .style('font-weight', 'bold')
-            .style('fill', 'white')
+            .style('fill', 'white');
+
+        title.exit().remove();
 
         // Set the scales
         const xScale = d3.scaleBand() // For categories, discrete
@@ -49,27 +52,34 @@ const BarChart = ({data, playerAttribute}) => {
             .tickSize(-svgWidth + margin.left + margin.right)
             .tickFormat('')
 
-        // Append new group element g to the svg, assigning it a class called "grid".
-        // Call the gridline generator function and append them to the svg
-        const yGridGroup = svg.append('g')
+        const yGridGroup = svg.selectAll('.grid').data([null]);
+
+        yGridGroup.enter()
+            .append('g')
             .attr('class', 'grid')
             .attr('transform', `translate(${margin.left}, 0)`)
-            .call(yGridlines)
+            .merge(yGridGroup)
+            .call(yGridlines);
 
-        // Select "line" -elements within yGridGroup
+        yGridGroup.exit().remove();
+
         yGridGroup.selectAll('line')
-            .style('stroke', '#ccc') // Set the color of the gridlines
-            .style('stroke-width', 0.1) // Set the width of the gridlines
+            .style('stroke', '#ccc')
+            .style('stroke-width', 0.1);
+
+
 
         // Add bars. We are basically enumerating over the array provided
-        svg.selectAll('rect') // selecting the rectangles that will be created
-            .data(data) // binding data to the rectangles that will be created
-            .enter() // Creating more rectangle elements if not enough exist
+        const bars = svg.selectAll('rect').data(data);
+
+        // svg.selectAll('rect').remove();
+
+        const barsEnter = bars.enter()
             .append('rect') // Appending the created rectangles to the svg
             .attr('x', (d, i) => xScale(d.season)) // Provide item season attribute, and let the xScale set the correct position
-            .attr('y', d => yScale(d[playerAttribute]))
-            .attr('height', (d) => svgHeight - margin.bottom - yScale(d[playerAttribute])) // Correct height
             .attr('width', xScale.bandwidth())
+            .attr('y', yScale(0)) // Start from y = 0
+            .attr('height', 0) // Start with height 0
             .attr("rx", 6)
             .attr('fill', barColor)
             .on('mouseover', function (event, d) { // Attache evrent listenre to each rectancle. function is executed on mousover
@@ -128,35 +138,90 @@ const BarChart = ({data, playerAttribute}) => {
             })
 
 
+        // Apply the initial transition to the entering bars
+        barsEnter.transition()
+            .duration(800)
+            .attr('y', d => yScale(d[playerAttribute]))
+            .attr('height', d => svgHeight - margin.bottom - yScale(d[playerAttribute]));
+
+
+        // Merge enter and update selections
+        barsEnter.merge(bars)
+            .transition()
+            .duration(800)
+            .attr('x', d => xScale(d.season))
+            .attr('width', xScale.bandwidth())
+            .attr('y', d => yScale(d[playerAttribute]))
+            .attr('height', d => svgHeight - margin.bottom - yScale(d[playerAttribute]))
+            .attr('fill', barColor);
+
+        // Add exit transition
+        bars.exit().transition()
+            .duration(800)
+            .attr('x', svgWidth) // Move bars out to the right
+            .attr('width', 0)
+            .remove();
+
         // Add data labels
-        svg.selectAll('text.barchartlabel') // Select text elements with class barchartlabel (None in this case)
-            .data(data) // Bind data to the these elememts
-            .enter() // Create new elements if not enough exist. In this case, 0 exits initially
-            .append('text') // Append text element for each item in data array
-            .attr('class', 'barchartlabel') // Add class for future convenience (we can just use selectAll('barchartlabel')
-            .attr('x', (d) => xScale(d.season) + xScale.bandwidth() / 2)
-            .attr('y', (d) => yScale(d[playerAttribute]) - 5)
+        const labels = svg.selectAll('.barchartlabel').data(data);
+
+        labels.enter()
+            .append('text')
+            .attr('class', 'barchartlabel')
+            .merge(labels)
+            .attr('x', d => xScale(d.season) + xScale.bandwidth() / 2)
+            .attr('y', d => yScale(d[playerAttribute]) - 5)
             .attr('text-anchor', 'middle')
-            .text((d) => d[playerAttribute])
+            .text(d => d[playerAttribute])
             .style('fill', 'white')
             .style('font-size', '12px');
+
+        labels.exit().remove();
 
 
         // Create an x-axis generator
         const xAxis = d3.axisBottom(xScale);
 
-        svg.append('g') // Appending a "group" -element to the svg
-            .call(xAxis) // populating the g-element with the axis generator
-            .attr('transform', `translate(0, ${svgHeight - margin.bottom})`)// Transform whole axis to the bottom of the graph
-            .selectAll('text') // Selecting the text element which are the labels
-            .attr('transform', 'rotate(-45)') // Rorating labels
-            .style('text-anchor', 'end')
+        // Clear any existing x-axis
+        svg.selectAll('.x-axis').remove()
 
+        // Append new x-axis group or delsef if already exists
+        const xAxisGroup = svg.selectAll('.x-axis').data([null])
+
+        // Handle the enter selection for the x-axis
+        xAxisGroup.enter()
+            .append('g') // Append a new group element if one doesn't exist
+            .attr('class', 'x-axis') // Assign class for easy selection later
+            .merge(xAxisGroup) // Merge enter and update selections
+            .attr('transform', `translate(0, ${svgHeight - margin.bottom})`) // Transform the axis to the bottom
+            .call(xAxis) // Generate the x-axis with the axis generator
+            .selectAll('text') // Selecting the text elements (labels)
+            .attr('transform', 'rotate(-45)') // Rotate labels
+            .style('text-anchor', 'end');
+
+// Handle the exit selection
+        xAxisGroup.exit().remove();
+
+
+        // Create a y-axis generator
         const yAxis = d3.axisLeft(yScale).ticks(10);
 
-        svg.append('g')
+        // Clear any existing y-axis
+        svg.selectAll('.y-axis').remove();
+
+        // Select the y-axis group and bind data to it
+        const yAxisGroup = svg.selectAll('.y-axis').data([null]);
+
+        // Handle the enter selection
+        yAxisGroup.enter()
+            .append('g')
+            .attr('class', 'y-axis')
             .attr('transform', `translate(${margin.left}, 0)`)
-            .call(yAxis)
+            .merge(yAxisGroup)
+            .call(yAxis);
+
+        // Handle the exit selection
+        yAxisGroup.exit().remove();
 
     }, [data, playerAttribute]);
 

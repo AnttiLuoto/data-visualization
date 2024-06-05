@@ -20,12 +20,11 @@ const DropdownMenu = ({ items, onItemSelect }) => {
                 onClick={toggleOpen}
             >
                 Select Option
-                {/*<ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />*/}
             </button>
 
             {isOpen && (
                 <div
-                    className="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                     role="menu"
                 >
                     <ul className="py-1 text-sm text-black">
