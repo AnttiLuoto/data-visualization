@@ -4,12 +4,14 @@ import BarChart_test from "./components/BarChart_test.jsx";
 import DropDown from "./components/Dropdown.jsx";
 import PriceHistoryLine from "./components/PriceHistoryLine.jsx";
 import PriceHistoryLinePercentage from "./components/PriceHistoryLinePercentage.jsx";
+import PriceChangeBar from "./components/PriceChangeBar.jsx";
 
 function App() {
 
     // Variables for D_Product and F_PriceHistory
-    const [priceHistory, setPriceHistory] = useState([]) // List of objects
-    const [products, setProducts] = useState([]) // List of products
+    const [priceHistory, setPriceHistory] = useState([])
+    const [productAggregates, setProductAggregates] = useState([])
+    const [products, setProducts] = useState([])
     const [productNames, setProductNames] = useState([]) // Product names for the dropdown
 
     // Variables for selected items
@@ -26,6 +28,14 @@ function App() {
                 setPriceHistory(data)
             })
             .catch(error => console.error('Error fetching PriceHistory: ', error));
+
+        // Product aggretes
+        fetch('./data/F_ProductAggregates.json')
+            .then(response => response.json())
+            .then(data => {
+                setProductAggregates(data)
+            })
+            .catch(error => console.error('Error fetching ProductAggregates: ', error));
 
         // Products
         fetch('./data/D_Product.json')
@@ -50,41 +60,38 @@ function App() {
         : [];
 
     return (
-        <div className="p-5 bg-gray-900 min-h-screen text-white">
+        <div className="p-5 bg-emerald-50 min-h-screen text-gray-900">
             <div className="mb-5">
-                <h1 className="text-3xl font-bold text-center">Data Visualization with D3</h1>
+                <h1 className="text-3xl font-bold text-center">Retail price analysis</h1>
             </div>
             <div className='flex flex-row'>
-                <div className='flex-col w-64 border-r-2'>
-                    Sidepanel
-                    <div className="col-span-1 mb-10">
-                        <DropDown items={productNames} onItemSelect={handleProductSelect}/>
-                    </div>
-                    <div className="col-span-1 mb-10">
+                <div className='flex flex-col w-64 border-r-2 p-4'>
+                    <h2 className="font-semibold mb-4">Filtering</h2>
+                    <div className="mb-10">
                         <DropDown items={productNames} onItemSelect={handleProductSelect}/>
                     </div>
                 </div>
-                {/*<div className="grid grid-cols-1 md:grid-cols-2 gap-4">*/}
-                <div className="grid grid-cols-2 ">
-                    <div className="col-span-1">
-                        {priceHistory.length > 0 ?
-                            <PriceHistoryLine data={filteredPriceHistory} selectedProduct={selectedProduct}/> :
-                            <p>Loading data...</p>}
-                    </div>
-                    <div className="col-span-1">
-                        {priceHistory.length > 0 ?
-                            <PriceHistoryLinePercentage data={filteredPriceHistory} selectedProduct={selectedProduct}/> :
-                            <p>Loading data...</p>}
-                    </div>
-                    <div className="col-span-1">
-                        {priceHistory.length > 0 ?
-                            <PriceHistoryLine data={filteredPriceHistory} selectedProduct={selectedProduct}/> :
-                            <p>Loading data...</p>}
-                    </div>
-                    <div className="col-span-1">
-                        {priceHistory.length > 0 ?
-                            <PriceHistoryLine data={filteredPriceHistory} selectedProduct={selectedProduct}/> :
-                            <p>Loading data...</p>}
+                <div className="flex flex-col flex-1 pl-4 w-[1600px]">
+                    <div className="w-[1600px]">
+                        <div className="flex justify-center shadow-md rounded-md bg-blue-100 mb-10">
+                            {priceHistory.length > 0 ?
+                                <PriceChangeBar data={productAggregates} selectedProduct={selectedProduct} onBarClick={handleProductSelect}/> :
+                                <p>Loading data...</p>}
+                        </div>
+                        <div className="grid gap-10 grid-cols-2">
+                            {/* PriceHistoryLine and PriceHistoryPercentage should be below PriceChangeBar, and be one col wide */}
+                            <div className="flex justify-center col-span-1 shadow-md rounded-md bg-blue-100">
+                                {priceHistory.length > 0 ?
+                                    <PriceHistoryLine data={filteredPriceHistory} selectedProduct={selectedProduct}/> :
+                                    <p>Loading data...</p>}
+                            </div>
+                            <div className="flex justify-center         col-span-1 shadow-md rounded-md bg-blue-100">
+                                {priceHistory.length > 0 ?
+                                    <PriceHistoryLinePercentage data={filteredPriceHistory}
+                                                                selectedProduct={selectedProduct}/> :
+                                    <p>Loading data...</p>}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

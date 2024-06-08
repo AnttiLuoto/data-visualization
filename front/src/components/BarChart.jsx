@@ -67,8 +67,6 @@ const BarChart = ({data, playerAttribute}) => {
             .style('stroke', '#ccc')
             .style('stroke-width', 0.1);
 
-
-
         // Add bars. We are basically enumerating over the array provided
         const bars = svg.selectAll('rect').data(data);
 
@@ -82,7 +80,7 @@ const BarChart = ({data, playerAttribute}) => {
             .attr('height', 0) // Start with height 0
             .attr("rx", 6)
             .attr('fill', barColor)
-            .on('mouseover', function (event, d) { // Attache evrent listenre to each rectancle. function is executed on mousover
+            .on('mouseover', function (event, d) { // Attache event listener to each rectancle. function is executed on mousover
                 d3.select(this)
                     .attr('fill', barColorHighlight)
 

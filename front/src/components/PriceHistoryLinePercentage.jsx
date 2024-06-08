@@ -8,7 +8,7 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
     const ref = useRef();
 
     useEffect(() => {
-        console.log("PriceHistoryPercentageLine", data)
+        // console.log("PriceHistoryPercentageLine", data)
 
         if (!data || data.length === 0) {
             return;
@@ -17,7 +17,7 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
         const svgWidth = 600
         const margin = {top: 30, right: 20, bottom: 50, left: 40};
         const lineColor = "#80da20"
-        const positiveShadeColor = "rgba(255,0,0,0.62)";
+        const positiveShadeColor = "rgba(217,112,112,0.62)";
         const negativeShadeColor = "rgba(21,246,4,0.62)";
 
         // const firstPrice = data[]
@@ -50,7 +50,7 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
             .text("Price % Change: " + selectedProduct)
             .attr('text-anchor', 'left')
             .style('font-weight', 'bold')
-            .style('fill', 'white');
+            .style('fill', 'black');
 
         title.exit().remove();
 
@@ -66,7 +66,7 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
         // Add Y grid lines
         const yGridlines = d3.axisLeft(yScale)
             .tickSize(-svgWidth + margin.left + margin.right)
-            .tickFormat('')
+            .tickFormat(''); // Custom format function to add ' %' to each tick label
 
         svg.append('g')
             .attr('class', 'grid')
@@ -75,7 +75,7 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
 
         // Style Y grid lines
         svg.selectAll('.grid line')
-            .style('stroke', '#ccc')
+            .style('stroke', 'grey')
             .style('stroke-width', 0.1);  // Change color and width here
 
         // Add X axis
@@ -89,8 +89,21 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
         // Add Y axis
         svg.append('g')
             .attr('transform', `translate(${margin.left},0)`)
-            .call(d3.axisLeft(yScale));
+            .call(d3.axisLeft(yScale)
+                .tickFormat(d => d + ' %')); // Custom format function to add ' %' to each tick label
 
+
+        // Create a constant line at y=0
+        const zeroLineValue = yScale(0)
+
+        svg.append('line')
+            .attr('x1', margin.left)
+            .attr('x2', svgWidth - margin.right)
+            .attr('y1', zeroLineValue)
+            .attr('y2', zeroLineValue)
+            .attr('stroke', '#232222')
+            .attr('stroke-width', '2')
+            .attr("stroke-dasharray", "4 4");
         // Create the line
         const line = d3.line()
             .x(d => xScale(new Date(d.date)))
@@ -123,7 +136,7 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
             .attr('fill', positiveShadeColor)
             .attr('d', areaPositive) // d = attribute containing a string describing the area to be drawn.
 
- // Append the area to the svg
+    // Append the area to the svg
         svg.append('path')
             .datum(data) // Bind the full dataset to a sigle path-element. (not create one path-element for each data point)
             .attr('fill', negativeShadeColor)

@@ -41,7 +41,7 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
             .text("Price over time: " + selectedProduct)
             .attr('text-anchor', 'left')
             .style('font-weight', 'bold')
-            .style('fill', 'white');
+            .style('fill', 'black');
 
         title.exit().remove();
 
@@ -66,7 +66,7 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
 
         // Style Y grid lines
         svg.selectAll('.grid line')
-            .style('stroke', '#ccc')
+            .style('stroke', 'grey')
             .style('stroke-width', 0.1);  // Change color and width here
 
         // Add X axis
@@ -80,7 +80,8 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
         // Add Y axis
         svg.append('g')
             .attr('transform', `translate(${margin.left},0)`)
-            .call(d3.axisLeft(yScale));
+            .call(d3.axisLeft(yScale)
+                .tickFormat(d => d + ' €'));
 
         // Create the line
         const line = d3.line()
