@@ -16,6 +16,8 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Specify the Node version
 
       - name: Install dependencies
         run: npm install
@@ -29,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: production-files
-          path: ./dist
+          path: data-visualization/front/dist
 
   deploy:
     name: Deploy
