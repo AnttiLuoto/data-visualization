@@ -10,12 +10,15 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
         }
 
         const svgHeight = 600;
-        const svgWidth = 1400;
-        const margin = { top: 30, right: 20, bottom: 200, left: 40 };
-        const barColor = "#80da20";
-        const positiveColor = "#da2061";
-        const negativeColor = "#30ff02";
-        const hoverColor = "#4ac22f"
+        const svgWidth = 1450;
+        const margin = { top: 30, right: 20, bottom: 200, left: 70 };
+        const fontColor = "#252a34"
+        const yTickFontSize = '15px'
+        const xTickFontSize = '12px'
+        const positiveColor = "#ff2e63";
+        const negativeColor = "#08d9d6";
+        const hoverColor = "#252a34"
+        const shadowColor = "black"
 
         const selectedKpi = 'price_change_percentage';
 
@@ -30,12 +33,11 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
 
         const xScale = d3.scaleBand()
             .domain(data.map(d => d.productName))
-            // .range([margin.left, svgWidth - margin.right])
             .range([margin.left, svgWidth-margin.right])
             .padding(0.05);
 
         const yScale = d3.scaleLinear()
-            .domain([minValue, maxValue])
+            .domain([minValue - 5, maxValue + 5])
             .range([svgHeight - margin.bottom, margin.top]);
 
         const zeroLine = yScale(0);
@@ -46,6 +48,7 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
 
         svg.selectAll('*').remove();
 
+        // Title
         svg.append('text')
             .attr('class', 'title')
             .attr('x', svgWidth * 0.05)
@@ -55,32 +58,44 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
             .style('font-weight', 'bold')
             .style('fill', 'black');
 
+        // Y-grid
         svg.append('g')
             .attr('class', 'grid')
             .attr('transform', `translate(${margin.left}, 0)`)
             .call(yGridlines);
 
+        // Format y-grid lines
         svg.selectAll('.grid line')
             .style('stroke', 'grey')
             .style('stroke-width', 0.1);
 
+        // Y-axis ticks
         svg.append('g')
-            .attr('transform', `translate(0,${svgHeight - margin.bottom})`)
-            .call(d3.axisBottom(xScale))
-            .selectAll("text")
-            .attr("transform", "rotate(-45)")
-            .style("text-anchor", "end");
-
-        svg.append('g')
+            .style('font-size', yTickFontSize)
+            .style('font-weight', 'bold')
+            .style('color', fontColor)
             .attr('transform', `translate(${margin.left},0)`)
             .call(d3.axisLeft(yScale)
                 .tickFormat(d => d + ' %'));
 
+        // X-axis ticks and formatting
+        svg.append('g')
+            .style('font-size', xTickFontSize)
+            .style('font-weight', 'bold')
+            .style('color', fontColor)
+            .attr('transform', `translate(0,${svgHeight - margin.bottom})`)
+            .call(d3.axisBottom(xScale)
+                .tickFormat(d => d.length > 44 ? d.slice(0, 20) + '...' : d))
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
+
+        // Bars
         svg.selectAll('.bar')
             .data(data)
             .enter()
             .append('rect')
-            .attr('class', d => d.productName === selectedProduct ? 'bar glow' : 'bar') // Highlight the selected bar
+            .attr('class', d => d.productName === selectedProduct ? 'bar highlighted-bar' : 'bar') // Highlight the selected bar
             .attr('x', d => xScale(d.productName))
             .attr('width', xScale.bandwidth())
             .attr('y', d => d[selectedKpi] >= 0 ? yScale(d[selectedKpi]) : zeroLine)
@@ -98,6 +113,7 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
             });
 
 
+        // Constant y-line for Y=0
         svg.append('line')
             .attr('x1', margin.left)
             .attr('x2', svgWidth - margin.right)

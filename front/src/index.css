@@ -10,6 +10,7 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
+  /*color: #252a34;*/
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,6 +18,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.glow {
-  filter: drop-shadow(0 0 0.75rem crimson);
+.highlighted-bar {
+  fill: #242424; /* Highlight color for the bar */
+  /*filter: drop-shadow(0 0 0.3rem rgb(15, 149, 245));*/
+  border-color: black;
+  border-style: solid;
+  border-width: 10px;
 }
+

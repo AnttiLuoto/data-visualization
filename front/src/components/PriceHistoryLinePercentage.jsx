@@ -1,43 +1,38 @@
-import React, {useRef, useEffect, useState} from "react";
+import React, { useRef, useEffect } from "react";
 import * as d3 from 'd3';
-// import TooltipSeasonStats from "./TooltipSeasonStats.jsx";
 
-const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
-    // console.log(data)
-
+const PriceHistoryLinePercentage = ({ data, selectedProduct }) => {
     const ref = useRef();
 
     useEffect(() => {
-        // console.log("PriceHistoryPercentageLine", data)
-
         if (!data || data.length === 0) {
             return;
         }
-        const svgHeight = 400
-        const svgWidth = 600
-        const margin = {top: 30, right: 20, bottom: 50, left: 40};
-        const lineColor = "#80da20"
-        const positiveShadeColor = "rgba(217,112,112,0.62)";
-        const negativeShadeColor = "rgba(21,246,4,0.62)";
+        const svgHeight = 500;
+        const svgWidth = 700;
+        const margin = { top: 30, right: 20, bottom: 70, left: 50 };
+        const fontColor = "#252a34"
+        const lineColor = "#252a34";
+        const crosshairsColor = "#21174a"
+        const positiveShadeColor = "#ff2e63";
+        const negativeShadeColor = "#08d9d6";
+        const yTickFontSize = '15px'
+        const xTickFontSize = '15px'
 
-        // const firstPrice = data[]
-        console.log("first price: ", data[0].unitPrice)
-        console.log("max price", d3.max(data, d => d.unitPrice))
-        console.log("min price", d3.min(data, d => d.unitPrice))
-
-        const firstPrice = data[0].unitPrice
-        const maxPrice = d3.max(data, d => d.unitPrice)
-        const minPrice = d3.min(data, d => d.unitPrice)
-        const minDiff = 100 * (minPrice / firstPrice) - 100
-        const maxDiff = 100 * (maxPrice / firstPrice) - 100
+        const firstPrice = data[0].unitPrice;
+        const maxPrice = d3.max(data, d => d.unitPrice);
+        const minPrice = d3.min(data, d => d.unitPrice);
+        const minDiff = 100 * (minPrice / firstPrice) - 100;
+        const maxDiff = 100 * (maxPrice / firstPrice) - 100;
 
         // Creating an svg to render to
         const svg = d3.select(ref.current)
             .attr('width', svgWidth)
-            .attr('height', svgHeight)
+            .attr('height', svgHeight);
 
-        // Clear any existing content
-        svg.selectAll('*').remove();
+        // Clear any existing non-path content
+        svg.selectAll('g').remove();
+        svg.selectAll('.title').remove();
 
         // Add or update title
         const title = svg.selectAll('.title').data([selectedProduct]);
@@ -50,7 +45,7 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
             .text("Price % Change: " + selectedProduct)
             .attr('text-anchor', 'left')
             .style('font-weight', 'bold')
-            .style('fill', 'black');
+            .style('fill', fontColor);
 
         title.exit().remove();
 
@@ -59,27 +54,31 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
             .domain(d3.extent(data, d => new Date(d.date)))
             .range([margin.left, svgWidth - margin.right]);
 
-        const yScale = d3.scaleLinear() // For continuous variables
+        const yScale = d3.scaleLinear()
             .domain([minDiff - 10, maxDiff + 10])
             .range([svgHeight - margin.bottom, margin.top]);
 
         // Add Y grid lines
         const yGridlines = d3.axisLeft(yScale)
             .tickSize(-svgWidth + margin.left + margin.right)
-            .tickFormat(''); // Custom format function to add ' %' to each tick label
+            // .style('fill', 'red') // Change this to your desired color
+            .tickFormat('');
 
-        svg.append('g')
+        const yGridGroup = svg.append('g')
             .attr('class', 'grid')
             .attr('transform', `translate(${margin.left}, 0)`)
             .call(yGridlines);
 
-        // Style Y grid lines
-        svg.selectAll('.grid line')
-            .style('stroke', 'grey')
-            .style('stroke-width', 0.1);  // Change color and width here
+        // Style Y grid lines and ticks
+        yGridGroup.selectAll('.tick line')
+            .style('stroke', fontColor)
+            .style('stroke-width', 0.1);
 
         // Add X axis
         svg.append('g')
+            .style('font-size', xTickFontSize)
+            .style('font-weight', 'bold')
+            .style('color', fontColor)
             .attr('transform', `translate(0,${svgHeight - margin.bottom})`)
             .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%Y-%m-%d")))
             .selectAll("text")
@@ -88,29 +87,34 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
 
         // Add Y axis
         svg.append('g')
+            .style('font-size', '15px')
+            .style('font-weight', 'bold')
+            .style('color', fontColor)
             .attr('transform', `translate(${margin.left},0)`)
-            .call(d3.axisLeft(yScale)
-                .tickFormat(d => d + ' %')); // Custom format function to add ' %' to each tick label
-
+            .call(d3.axisLeft(yScale).tickFormat(d => d + ' %'));
 
         // Create a constant line at y=0
-        const zeroLineValue = yScale(0)
+        const zeroLineValue = yScale(0);
+
+        svg.selectAll('.zeroline').remove(); // Remove previous line
 
         svg.append('line')
+            .attr("class", "zeroline")
             .attr('x1', margin.left)
             .attr('x2', svgWidth - margin.right)
             .attr('y1', zeroLineValue)
             .attr('y2', zeroLineValue)
-            .attr('stroke', '#232222')
+            .attr('stroke', fontColor)
             .attr('stroke-width', '2')
             .attr("stroke-dasharray", "4 4");
+
         // Create the line
         const line = d3.line()
             .x(d => xScale(new Date(d.date)))
             .y(d => yScale(100 * (d.unitPrice / firstPrice) - 100))
-            .curve(d3.curveMonotoneX); // Apply curve to the line
+            .curve(d3.curveMonotoneX);
 
-        // Create the shaded area only if y1 is creater than 0
+        // Create the shaded area only if y1 is greater than 0
         const areaPositive = d3.area()
             .x(d => xScale(new Date(d.date)))
             .y0(yScale(0))
@@ -130,34 +134,100 @@ const PriceHistoryLinePercentage = ({data, selectedProduct}) => {
             })
             .curve(d3.curveMonotoneX);
 
-        // Append the area to the svg
-        svg.append('path')
-            .datum(data) // Bind the full dataset to a sigle path-element. (not create one path-element for each data point)
+        // Update or append the positive area
+        let positiveAreaPath = svg.selectAll('.area-positive').data([data]);
+        positiveAreaPath.enter()
+            .append('path')
+            .attr('class', 'area-positive')
             .attr('fill', positiveShadeColor)
-            .attr('d', areaPositive) // d = attribute containing a string describing the area to be drawn.
+            .merge(positiveAreaPath)
+            .transition()
+            .duration(1000)
+            .attr('d', areaPositive);
 
-    // Append the area to the svg
-        svg.append('path')
-            .datum(data) // Bind the full dataset to a sigle path-element. (not create one path-element for each data point)
+        positiveAreaPath.exit().remove();
+
+        // Update or append the negative area
+        let negativeAreaPath = svg.selectAll('.area-negative').data([data]);
+        negativeAreaPath.enter()
+            .append('path')
+            .attr('class', 'area-negative')
             .attr('fill', negativeShadeColor)
-            .attr('d', areaNegative) // d = attribute containing a string describing the area to be drawn.
+            .merge(negativeAreaPath)
+            .transition()
+            .duration(1000)
+            .attr('d', areaNegative);
 
+        negativeAreaPath.exit().remove();
 
-        // Append the path
-        svg.append('path')
-            .datum(data)
+        // Update or append the line
+        let path = svg.selectAll('.line-path').data([data]);
+        path.enter()
+            .append('path')
+            .attr('class', 'line-path')
             .attr('fill', 'none')
             .attr('stroke', lineColor)
             .attr('stroke-width', 4)
+            .merge(path)
+            .transition()
+            .duration(1000)
             .attr('d', line);
+
+        path.exit().remove();
+
+        // Mouse crosshairs
+
+        // Crosshairs setup
+        const crosshairX = svg.append("line")
+            .attr("class", "crosshair")
+            .attr("y1", margin.top)
+            .attr("y2", svgHeight - margin.bottom)
+            .attr('stroke', crosshairsColor)
+            .attr('stroke-width', '1px')
+            .style("visibility", "hidden");
+
+        const crosshairY = svg.append("line")
+            .attr("class", "crosshair")
+            .attr("x1", margin.left)
+            .attr("x2", svgWidth - margin.right)
+            .attr('stroke', crosshairsColor)
+            .attr('stroke-width', '1px')
+            .style("visibility", "hidden");
+
+        const overlay = svg.append('rect')
+            .attr('class', 'overlay')
+            .attr('x', margin.left)
+            .attr('width', svgWidth - margin.right - margin.left)
+            .attr('y', margin.top)
+            .attr('height', svgHeight - margin.top - margin.bottom)
+            .attr('fill', 'none')
+            .style('pointer-events', 'all')
+            .on('mousemove', mousemove)
+            .on('mouseout', mouseout);
+
+        function mousemove(event) {
+            const [mouseX, mouseY] = d3.pointer(event);
+            if (mouseX >= margin.left && mouseX <= svgWidth - margin.right &&
+                mouseY >= margin.top && mouseY <= svgHeight - margin.bottom) {
+                crosshairX.attr("x1", mouseX).attr("x2", mouseX).style("visibility", "visible");
+                crosshairY.attr("y1", mouseY).attr("y2", mouseY).style("visibility", "visible");
+            } else {
+                mouseout();
+            }
+        }
+
+        function mouseout() {
+            crosshairX.style("visibility", "hidden");
+            crosshairY.style("visibility", "hidden");
+        }
 
     }, [data, selectedProduct]);
 
     return (
-        <div style={{position: 'relative'}}>
+        <div style={{ position: 'relative' }}>
             <svg ref={ref}></svg>
         </div>
-    )
-}
+    );
+};
 
-export default PriceHistoryLinePercentage
+export default PriceHistoryLinePercentage;

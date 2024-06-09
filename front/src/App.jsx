@@ -17,7 +17,7 @@ function App() {
     // Variables for selected items
     const [selectedProduct, setSelectedProduct] = useState('')
 
-
+    const col = "#f3f8f8"
     // Load in the data
     useEffect(() => {
 
@@ -60,7 +60,7 @@ function App() {
         : [];
 
     return (
-        <div className="p-5 bg-emerald-50 min-h-screen text-gray-900">
+        <div className="p-5 bg-white min-h-screen text-gray-900">
             <div className="mb-5">
                 <h1 className="text-3xl font-bold text-center">Retail price analysis</h1>
             </div>
@@ -73,19 +73,19 @@ function App() {
                 </div>
                 <div className="flex flex-col flex-1 pl-4 w-[1600px]">
                     <div className="w-[1600px]">
-                        <div className="flex justify-center shadow-md rounded-md bg-blue-100 mb-10">
+                        <div className="flex justify-center shadow-md rounded-md bg-[#F3F8F8FF] mb-10">
                             {priceHistory.length > 0 ?
                                 <PriceChangeBar data={productAggregates} selectedProduct={selectedProduct} onBarClick={handleProductSelect}/> :
                                 <p>Loading data...</p>}
                         </div>
                         <div className="grid gap-10 grid-cols-2">
                             {/* PriceHistoryLine and PriceHistoryPercentage should be below PriceChangeBar, and be one col wide */}
-                            <div className="flex justify-center col-span-1 shadow-md rounded-md bg-blue-100">
+                            <div className="flex justify-center col-span-1 shadow-md rounded-md bg-[#F3F8F8FF]">
                                 {priceHistory.length > 0 ?
                                     <PriceHistoryLine data={filteredPriceHistory} selectedProduct={selectedProduct}/> :
                                     <p>Loading data...</p>}
                             </div>
-                            <div className="flex justify-center         col-span-1 shadow-md rounded-md bg-blue-100">
+                            <div className="flex justify-center col-span-1 shadow-md rounded-md bg-[#F3F8F8FF]">
                                 {priceHistory.length > 0 ?
                                     <PriceHistoryLinePercentage data={filteredPriceHistory}
                                                                 selectedProduct={selectedProduct}/> :
