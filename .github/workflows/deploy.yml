@@ -31,13 +31,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Set the working directory to 'front' for the following steps
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-        working-directory: ./front
 
       - name: Install dependencies
         run: npm ci
