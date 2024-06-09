@@ -89,7 +89,7 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
         title.enter()
             .append('text')
             .attr('class', 'title')
-            .attr('x', svgWidth * 0.1)
+            .attr('x', margin.left)
             .attr('y', svgHeight * 0.05)
             .merge(title)
             .text("Price over time: " + selectedProduct)
@@ -248,6 +248,16 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
             .attr('stroke-width', '1px')
             .style("visibility", "hidden");
 
+        // Add text element for y-axis label
+        const yAxisLabel = svg.append("text")
+            .attr("class", "y-axis-label")
+            .attr("x", margin.left + 5) // position to the right of the chart
+            .attr("y", margin.top)
+            .attr("dy", "0.35em")
+            .style("visibility", "hidden")
+            .style("font-size", "12px")
+            .style("fill", "black");
+
         const overlay = svg.append('rect')
             .attr('class', 'overlay')
             .attr('x', margin.left)
@@ -265,6 +275,15 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
                 mouseY >= margin.top && mouseY <= svgHeight - margin.bottom) {
                 crosshairX.attr("x1", mouseX).attr("x2", mouseX).style("visibility", "visible");
                 crosshairY.attr("y1", mouseY).attr("y2", mouseY).style("visibility", "visible");
+
+                // Get the value corresponding to the mouseY position
+                const yValue = yScale.invert(mouseY);
+
+                // Update the y-axis label
+                yAxisLabel
+                    .attr("y", mouseY + -10)
+                    .text(yValue.toFixed(2) + " €") // format the value as needed
+                    .style("visibility", "visible");
             } else {
                 mouseout();
             }
@@ -273,6 +292,7 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
         function mouseout() {
             crosshairX.style("visibility", "hidden");
             crosshairY.style("visibility", "hidden");
+            yAxisLabel.style("visibility", "hidden");
         }
     }, [data, selectedProduct]);
 

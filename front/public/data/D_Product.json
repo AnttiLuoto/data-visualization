@@ -100,16 +100,6 @@
         "eanCode": "6413200330404"
     },
     {
-        "productName": "PANTTI KMP 1L TAI YLI, K",
-        "productGroup": "Pantit",
-        "eanCode": "200088052865"
-    },
-    {
-        "productName": "KER\u00c4ILYMAKSU 5,90E",
-        "productGroup": "Muut Oheispalvelut Ja -Myynti",
-        "eanCode": "200074546781"
-    },
-    {
         "productName": "3 Kaveria Vegaaninen Suklaa & P\u00e4hkin\u00e4kinuski j\u00e4\u00e4tel\u00f6 500ml/400g",
         "productGroup": "J\u00e4\u00e4tel\u00f6",
         "eanCode": "6430048443011"
@@ -198,5 +188,65 @@
         "productName": "Valio salaattijuusto kuutiot 180 g laktoositon",
         "productGroup": "Ruokajuustot",
         "eanCode": "6408430337613"
+    },
+    {
+        "productName": "Snellman Superior kinkku 180g",
+        "productGroup": "Tuoreet lihavalmisteet valinta",
+        "eanCode": "6409620010057"
+    },
+    {
+        "productName": "Fazer Puikula Kaura 9kpl 550g, kauraleip\u00e4",
+        "productGroup": "Vaaleat leiv\u00e4t",
+        "eanCode": "6411402202406"
+    },
+    {
+        "productName": "Rainbow Savustettu lohifileepala n 300g",
+        "productGroup": "Kalavalmisteet valinta",
+        "eanCode": "2396004000008"
+    },
+    {
+        "productName": "Rainbow 175g Mozzarellajuustoraaste",
+        "productGroup": "Ruokajuustot",
+        "eanCode": "6414893385535"
+    },
+    {
+        "productName": "Valio AURA\u00ae e170 g pala",
+        "productGroup": "Erikoisjuustot",
+        "eanCode": "6408430037001"
+    },
+    {
+        "productName": "Apetit Herne-maissi-porkkana pakaste 200g",
+        "productGroup": "Kasvispakasteet",
+        "eanCode": "6430104920500"
+    },
+    {
+        "productName": "Atria Kanan Minuuttifilee Pehme\u00e4n Pippurinen 760g",
+        "productGroup": "Tuore valintaliha",
+        "eanCode": "6407800010170"
+    },
+    {
+        "productName": "Rainbow vihre\u00e4 siemenet\u00f6n viiniryp\u00e4le 500 g",
+        "productGroup": "Hedelm\u00e4t",
+        "eanCode": "6414894500609"
+    },
+    {
+        "productName": "Appelsiini Navelina Espanja",
+        "productGroup": "Hedelm\u00e4t",
+        "eanCode": "2000041000005"
+    },
+    {
+        "productName": "Vadelma 125g",
+        "productGroup": "Marjat ja raparperi",
+        "eanCode": "8718226440051"
+    },
+    {
+        "productName": "Valio Oddlygood\u00ae kaurapohjainen gurtti 1 kg vadelma",
+        "productGroup": "Jogurtti",
+        "eanCode": "6408430408313"
+    },
+    {
+        "productName": "Silvertree kaasugrilli 3 poltinta Trio",
+        "productGroup": "Grillit",
+        "eanCode": "6412989528750"
     }
 ]

@@ -34,6 +34,7 @@ function App() {
             .then(response => response.json())
             .then(data => {
                 setProductAggregates(data)
+                setSelectedProduct(data[5]['productName'])
             })
             .catch(error => console.error('Error fetching ProductAggregates: ', error));
 

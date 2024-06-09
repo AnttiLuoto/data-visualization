@@ -8,10 +8,10 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
         if (!data || data.length === 0) {
             return;
         }
-
+        console.log(data)
         const svgHeight = 600;
         const svgWidth = 1450;
-        const margin = { top: 30, right: 20, bottom: 200, left: 70 };
+        const margin = { top: 30, right: 0, bottom: 200, left: 100 };
         const fontColor = "#252a34"
         const yTickFontSize = '15px'
         const xTickFontSize = '12px'
@@ -51,7 +51,7 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
         // Title
         svg.append('text')
             .attr('class', 'title')
-            .attr('x', svgWidth * 0.05)
+            .attr('x', margin.left)
             .attr('y', svgHeight * 0.04)
             .text("Overview: " + selectedKpi)
             .attr('text-anchor', 'left')
