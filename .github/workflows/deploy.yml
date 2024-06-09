@@ -36,6 +36,9 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+        # Add this step to change directory
+      - name: Change directory to front
+        run: cd front
 
       - name: Install dependencies
         run: npm ci
