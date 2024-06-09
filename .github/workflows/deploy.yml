@@ -2,8 +2,8 @@ name: Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: ['main']
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,8 +16,6 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v3
-        with:
-          node-version: '16' # Specify the Node version
 
       - name: Install dependencies
         run: npm install
