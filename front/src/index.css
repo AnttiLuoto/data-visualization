@@ -3,26 +3,68 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-  /*color: #252a34;*/
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+
+
+    --y-tick-font-size: 15px;
+    --y-tick-font-size-bar: 10px;
+    --x-tick-font-size: 15px;
+    --title-font-size: 15px;
+    --quantile-font-size: 12px;
+
+    --font-color: #252a34;
+    --positive-color: #edcf8e;
+    --negative-color: #ba7ba1;
+    --hover-color: #dc7860;
+    --shadow-color: black;
+
+    --bar-line-color: var(--hover-color); /* Same as bar hoverColor in the barchart */
+    --line-color: #020000; /* Same as bar hoverColor in the barchart */
+
+    --crosshairs-color: #21174a;
+    --q50-line-color: #6b7272;
+    --q0-color: rgba(186, 123, 161, 0.16);
+    --q10-color: rgba(186, 123, 161, 0.47);
+    --q25-color: var(--negative-color);
+
+    --bar-color-highlight: var(--bar-line-color);
+    --tooltip-color: #4d4c4c;
+    --positive-shade-color: var(--positive-color);
+    --negative-shade-color: var(--negative-color);
+
 }
 
 .highlighted-bar {
-  fill: #242424; /* Highlight color for the bar */
-  /*filter: drop-shadow(0 0 0.3rem rgb(15, 149, 245));*/
-  border-color: black;
-  border-style: solid;
-  border-width: 10px;
+    fill: var(--hover-color); /* Highlight color for the bar */
+    /*filter: drop-shadow(0 0 0.3rem rgb(15, 149, 245));*/
+    border-color: black;
+    border-style: solid;
+    border-width: 10px;
+}
+
+.main-chart-title {
+    text-anchor: start;
+    font-weight: bold;
+    font-size: 20px;
+    fill: black;
+}
+
+.chart-title {
+    text-anchor: start;
+    font-weight: bold;
+    font-size: 20px;
+    fill: var(--bar-line-color);
 }
 

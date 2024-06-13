@@ -8,17 +8,22 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
         if (!data || data.length === 0) {
             return;
         }
-        console.log(data)
+        const rootStyles = getComputedStyle(document.documentElement);
+
         const svgHeight = 600;
         const svgWidth = 1450;
-        const margin = { top: 30, right: 0, bottom: 200, left: 100 };
-        const fontColor = "#252a34"
-        const yTickFontSize = '15px'
-        const xTickFontSize = '12px'
-        const positiveColor = "#ff2e63";
-        const negativeColor = "#08d9d6";
-        const hoverColor = "#252a34"
-        const shadowColor = "black"
+        const margin = { top: 50, right: 0, bottom: 200, left: 100 };
+        const fontColor = rootStyles.getPropertyValue('--font-color').trim();
+        const yTickFontSize = rootStyles.getPropertyValue('--y-tick-font-size').trim();
+        const xTickFontSize = rootStyles.getPropertyValue('--x-tick-font-size-bar').trim();
+        const titleFontSize = rootStyles.getPropertyValue('--title-font-size').trim();
+        const positiveColor = rootStyles.getPropertyValue('--positive-color').trim();
+        const negativeColor = rootStyles.getPropertyValue('--negative-color').trim();
+        const hoverColor = rootStyles.getPropertyValue('--hover-color').trim();
+        const shadowColor = rootStyles.getPropertyValue('--shadow-color').trim();
+
+        const tooltipSize = 100; // Define tooltip size
+        const tooltipColor = "rgba(0, 0, 0, 0.8)"; // Define tooltip color
 
         const selectedKpi = 'price_change_percentage';
 
@@ -50,13 +55,19 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
 
         // Title
         svg.append('text')
-            .attr('class', 'title')
+            .attr('class', 'main-chart-title')
             .attr('x', margin.left)
-            .attr('y', svgHeight * 0.04)
-            .text("Overview: " + selectedKpi)
-            .attr('text-anchor', 'left')
-            .style('font-weight', 'bold')
-            .style('fill', 'black');
+            .attr('y', 30)
+            .text("Overview: Price Change Percentage");
+
+        // Instructions
+        svg.append('text')
+            .attr('x', svgWidth - margin.right * 2)
+            .attr('y', margin.top * 2)
+            .style('font-size', 30)
+            .style('text-anchor', 'end')
+            .style('color', 'red')
+            .text("Click bar to drill down!");
 
         // Y-grid
         svg.append('g')
@@ -95,23 +106,39 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
             .data(data)
             .enter()
             .append('rect')
-            .attr('class', d => d.productName === selectedProduct ? 'bar highlighted-bar' : 'bar') // Highlight the selected bar
+            .attr('class', d => d.productName === selectedProduct ? 'bar highlighted-bar' : 'bar')
             .attr('x', d => xScale(d.productName))
             .attr('width', xScale.bandwidth())
             .attr('y', d => d[selectedKpi] >= 0 ? yScale(d[selectedKpi]) : zeroLine)
             .attr('height', d => Math.abs(yScale(d[selectedKpi]) - zeroLine))
             .attr('fill', d => d[selectedKpi] >= 0 ? positiveColor : negativeColor)
             .attr('rx', 6)
-            .on('click',function (event, d) {
-                onBarClick(d.productName)
+            .on('click', function(event, d) {
+                onBarClick(d.productName);
             })
             .on('mouseover', function(event, d) {
                 d3.select(this).attr('fill', hoverColor);
+
+                // Calculate tooltip position
+                // let tooltipX = d => xScale(d.productName);
+                let tooltipXBase = event.pageX - 350;
+                let tooltipX = tooltipXBase < 900 ? tooltipXBase : tooltipXBase - 400
+                let tooltipY = event.pageY;
+
+                // Append text over the tooltip
+                svg.append('text')
+                    .attr('id', 'tooltip-text')
+                    .attr('x', tooltipX + 20)
+                    .attr('y', tooltipY - 120)
+                    .attr('fill', 'black')
+                    .style('font-size', '18px')
+                    .text(d.productName);
             })
             .on('mouseout', function(event, d) {
                 d3.select(this).attr('fill', d[selectedKpi] >= 0 ? positiveColor : negativeColor);
+                svg.select('#tooltip').remove();
+                svg.select('#tooltip-text').remove();
             });
-
 
         // Constant y-line for Y=0
         svg.append('line')

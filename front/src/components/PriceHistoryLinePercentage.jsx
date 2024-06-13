@@ -8,16 +8,18 @@ const PriceHistoryLinePercentage = ({ data, selectedProduct }) => {
         if (!data || data.length === 0) {
             return;
         }
+        const rootStyles = getComputedStyle(document.documentElement);
+
         const svgHeight = 500;
         const svgWidth = 700;
-        const margin = { top: 30, right: 20, bottom: 70, left: 50 };
-        const fontColor = "#252a34"
-        const lineColor = "#252a34";
-        const crosshairsColor = "#21174a"
-        const positiveShadeColor = "#ff2e63";
-        const negativeShadeColor = "#08d9d6";
-        const yTickFontSize = '15px'
-        const xTickFontSize = '15px'
+        const margin = { top: 50, right: 20, bottom: 75, left: 50 };
+        const fontColor = rootStyles.getPropertyValue('--font-color').trim();
+        const lineColor = rootStyles.getPropertyValue('--line-color').trim();
+        const crosshairsColor = rootStyles.getPropertyValue('--crosshairs-color').trim();
+        const positiveShadeColor = rootStyles.getPropertyValue('--positive-shade-color').trim();
+        const negativeShadeColor = rootStyles.getPropertyValue('--negative-shade-color').trim();
+        const yTickFontSize = rootStyles.getPropertyValue('--y-tick-font-size').trim();
+        const xTickFontSize = rootStyles.getPropertyValue('--x-tick-font-size').trim();
 
         const firstPrice = data[0].unitPrice;
         const maxPrice = d3.max(data, d => d.unitPrice);
@@ -35,17 +37,14 @@ const PriceHistoryLinePercentage = ({ data, selectedProduct }) => {
         svg.selectAll('.title').remove();
 
         // Add or update title
-        const title = svg.selectAll('.title').data([selectedProduct]);
+        const title = svg.selectAll('.chart-title').data([selectedProduct]);
         title.enter()
             .append('text')
-            .attr('class', 'title')
+            .attr('class', 'chart-title')
             .attr('x', margin.left)
-            .attr('y', svgHeight * 0.05)
+            .attr('y', 30)
             .merge(title)
             .text("Price % Change: " + selectedProduct)
-            .attr('text-anchor', 'left')
-            .style('font-weight', 'bold')
-            .style('fill', fontColor);
 
         title.exit().remove();
 
@@ -80,7 +79,10 @@ const PriceHistoryLinePercentage = ({ data, selectedProduct }) => {
             .style('font-weight', 'bold')
             .style('color', fontColor)
             .attr('transform', `translate(0,${svgHeight - margin.bottom})`)
-            .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%Y-%m-%d")))
+            .call(d3.axisBottom(xScale)
+                .tickFormat(d3.timeFormat("%Y-%m-%d"))
+                .ticks(d3.utcMonth.every(4))
+            )
             .selectAll("text")
             .attr("transform", "rotate(-45)")
             .style("text-anchor", "end");

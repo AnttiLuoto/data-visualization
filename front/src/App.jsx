@@ -73,9 +73,6 @@ function App() {
 
     return (
         <div className="p-5 bg-white min-h-screen text-gray-900">
-            <div className="mb-5">
-                <h1 className="text-3xl font-bold text-center">Retail price analysis</h1>
-            </div>
             <div className='flex flex-row'>
                 <div className='flex flex-col w-64 border-r-2 p-4'>
                     <h2 className="font-semibold mb-4">Filtering</h2>

@@ -15,19 +15,28 @@ const PriceChangeLineAll = ({
         if (!priceHistory || priceHistory.length === 0 || !priceHistoryQuantiles || priceHistoryQuantiles.length === 0) {
             return;
         }
-        const svgHeight = 600;
+        const rootStyles = getComputedStyle(document.documentElement);
+
+        const svgHeight = 500;
         const svgWidth = 1450;
-        const margin = { top: 30, right: 0, bottom: 200, left: 100 };
-        const fontColor = "#252a34"
-        const lineColor = "#252a34"; // Same as bar hoverColor in the barchart
-        // const Q50LineColor = "#035655";
-        const Q50LineColor = "#ff2e63";
-        const crosshairsColor = "#21174a"
-        const Q0Color = "rgba(8,217,214,0.06)";
-        const Q10Color = "rgba(8,217,214,0.4)";
-        const Q25Color = "#08d9d6";
-        const yTickFontSize = '15px'
-        const xTickFontSize = '15px'
+        const margin = { top: 50, right: 80, bottom: 75, left: 100 };
+        const yMin = -50
+        const yMax = 100
+        const fontColor = rootStyles.getPropertyValue('--font-color').trim();
+        const lineColor = rootStyles.getPropertyValue('--bar-line-color').trim(); // Same as bar hoverColor in the barchart
+        const Q50LineColor = rootStyles.getPropertyValue('--q50-line-color').trim();
+        const crosshairsColor = rootStyles.getPropertyValue('--crosshairs-color').trim()
+        const Q0Color = rootStyles.getPropertyValue('--q0-color').trim();
+        const Q10Color = rootStyles.getPropertyValue('--q10-color').trim();
+        const Q25Color = rootStyles.getPropertyValue('--q25-color').trim();
+        const yTickFontSize = rootStyles.getPropertyValue('--y-tick-font-size').trim()
+        const xTickFontSize = rootStyles.getPropertyValue('--x-tick-font-size').trim()
+        const quantileFontSize = rootStyles.getPropertyValue('--quantile-font-size').trim()
+
+        const QuantileLastItem = priceHistoryQuantiles[priceHistoryQuantiles.length - 1];
+        const Q50LastVal = QuantileLastItem.Q_50
+        const Q10LastVal = QuantileLastItem.Q_10_90[1]
+        const Q25LastVal = QuantileLastItem.Q_25_75[1]
 
         // const firstPrice = priceHistory[0].unitPrice;
         const maxPrice = d3.max(priceHistory, d => d.unitPrice);
@@ -45,17 +54,14 @@ const PriceChangeLineAll = ({
         svg.selectAll('.title').remove();
 
         // Add or update title
-        const title = svg.selectAll('.title').data([selectedProduct]);
+        const title = svg.selectAll('.chart-title').data([selectedProduct]);
         title.enter()
             .append('text')
-            .attr('class', 'title')
+            .attr('class', 'chart-title')
             .attr('x', margin.left)
-            .attr('y', svgHeight * 0.05)
+            .attr('y', 30)
             .merge(title)
             .text("Price % Change: " + selectedProduct)
-            .attr('text-anchor', 'left')
-            .style('font-weight', 'bold')
-            .style('fill', fontColor);
 
         title.exit().remove();
 
@@ -65,10 +71,7 @@ const PriceChangeLineAll = ({
             .range([margin.left, svgWidth - margin.right]);
 
         const yScale = d3.scaleLinear()
-            .domain([
-                -100, // min price (not grouped data yet!
-                130  // max price (not grouped data yet!
-            ])
+            .domain([yMin, yMax])
             .range([svgHeight - margin.bottom, margin.top]);
 
         // Add Y grid lines
@@ -92,7 +95,10 @@ const PriceChangeLineAll = ({
             .style('font-weight', 'bold')
             .style('color', fontColor)
             .attr('transform', `translate(0,${svgHeight - margin.bottom})`)
-            .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%Y-%m-%d")))
+            .call(d3.axisBottom(xScale)
+                    .tickFormat(d3.timeFormat("%Y-%m-%d"))
+                    .ticks(d3.utcMonth.every(4))
+            )
             .selectAll("text")
             .attr("transform", "rotate(-45)")
             .style("text-anchor", "end");
@@ -110,8 +116,8 @@ const PriceChangeLineAll = ({
         // Generator of area
         const Q_0Area = d3.area()
             .x(d => xScale(new Date(d.date)))
-            .y0(d => yScale(d.Q_0_100[0]))  // Access the first element of the array
-            .y1(d => yScale(d.Q_0_100[1]))  // Access the second element of the array
+            .y0(d => d.Q_0_100[0] < yMin ? yScale(yMin) : yScale(d.Q_0_100[0]))  // Access the first element of the tuple
+            .y1(d => d.Q_0_100[1] > yMax ? yScale(yMax) : yScale(d.Q_0_100[1]))  // Access the first element of the tuple
             .curve(d3.curveMonotoneX);
 
         // Update or append the area
@@ -130,8 +136,8 @@ const PriceChangeLineAll = ({
         // Generator of area
         const Q_10Area = d3.area()
             .x(d => xScale(new Date(d.date)))
-            .y0(d => yScale(d.Q_10_90[0]))  // Access the first element of the tuple
-            .y1(d => yScale(d.Q_10_90[1]))  // Access the second element of the tuple
+            .y0(d => yScale(d.Q_10_90[0]) > yScale(yMax) ? yScale(d.Q_10_90[0]) : yScale(yMax))  // Access the first element of the tuple
+            .y1(d => yScale(d.Q_10_90[1]) > yMin ? yScale(d.Q_10_90[1]) : yMin)  // Access the second element of the tuple
             .curve(d3.curveMonotoneX);
 
         // Update or append the area
@@ -178,8 +184,8 @@ const PriceChangeLineAll = ({
             .attr('class', 'Q50-line')
             .attr('fill', 'none')
             .attr('stroke', Q50LineColor)
-            .attr('stroke-width', 4)
-            // .attr("stroke-dasharray", "1,1")
+            .attr('stroke-width', 1.5)
+            .attr("stroke-dasharray", "10,5")
             .attr('d', Q50Line);
 
 
@@ -210,17 +216,48 @@ const PriceChangeLineAll = ({
             .attr('class', 'line-path')
             .attr('fill', 'none')
             .attr('stroke', lineColor)
-            .attr('stroke-width', 2)
+            .attr('stroke-width', 4)
             .attr('d', ([key, values]) => {
                 const firstPrice = values[0].unitPrice;
+                const yValue = d => yScale(100 * (d.unitPrice / firstPrice) - 100)
                 return d3.line()
                     .x(d => xScale(new Date(d.date)))
-                    .y(d => yScale(100 * (d.unitPrice / firstPrice) - 100))
+                    .y(d => {
+                        const value = yValue(d);
+                        return value < yScale(yMax) ? yScale(yMax) : value;
+                    })
                     .curve(d3.curveMonotoneX)(values);
             });
 
+        // Add quantile indicators
 
-        // Mouse crosshairs
+        svg.append('text')
+            .attr('class', 'quantile-label')
+            .attr('x', svgWidth - margin.right + 5)
+            .attr('y', yScale(Q50LastVal) + 4)
+            .attr('text-anchor', 'left')
+            .style('fill', Q50LineColor)
+            .style('font-size', quantileFontSize)
+            .text('Mean');
+
+        svg.append('text')
+            .attr('class', 'quantile-label')
+            .attr('x', svgWidth - margin.right + 5)
+            .attr('y', yScale(Q25LastVal) + 4)
+            .attr('text-anchor', 'left')
+            .style('fill', Q25Color)
+            .style('font-size', quantileFontSize)
+            .text('Q25 - Q75');
+
+        svg.append('text')
+            .attr('class', 'quantile-label')
+            .attr('x', svgWidth - margin.right + 5)
+            .attr('y', yScale(Q10LastVal) + 4)
+            .attr('text-anchor', 'left')
+            .style('fill', Q10Color)
+            .style('font-size', quantileFontSize)
+            .text('Q10 - Q90');
+
         // Crosshairs setup
         const crosshairX = svg.append("line")
             .attr("class", "crosshair")

@@ -13,20 +13,20 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
         if (!data || data.length === 0) {
             return;
         }
+        const rootStyles = getComputedStyle(document.documentElement);
 
         const svgHeight = 500;
         const svgWidth = 800;
-        const margin = { top: 30, right: 120, bottom: 70, left: 60 };
+        const margin = { top: 50, right: 120, bottom: 75, left: 60 };
         const tooltipSize = 100
-        const lineColor = "#252a34"
-        const crosshairsColor = "#21174a"
-        const fontColor = "#252a34"
-        const barColorHighlight = "#072e48"
-        const tooltipColor = "#4d4c4c"
-        const positiveShadeColor = "#ff2e63";
-        const negativeShadeColor = "#08d9d6";
-        const yTickFontSize = '15px'
-        const xTickFontSize = '15px'
+        const lineColor = rootStyles.getPropertyValue('--line-color').trim();
+        const crosshairsColor = rootStyles.getPropertyValue('--crosshairs-color').trim();
+        const fontColor = rootStyles.getPropertyValue('--font-color').trim();
+        const tooltipColor = rootStyles.getPropertyValue('--tooltip-color').trim();
+        const positiveShadeColor = rootStyles.getPropertyValue('--positive-shade-color').trim();
+        const negativeShadeColor = rootStyles.getPropertyValue('--negative-shade-color').trim();
+        const yTickFontSize = rootStyles.getPropertyValue('--y-tick-font-size').trim();
+        const xTickFontSize = rootStyles.getPropertyValue('--x-tick-font-size').trim();
 
         const firstPrice = data[0].unitPrice;
         const lastPrice = data[data.length -1 ].unitPrice;
@@ -43,7 +43,7 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
 
         // Clear any existing non-path content
         svg.selectAll('g').remove();
-        svg.selectAll('.title').remove();
+        svg.selectAll('.chart-title').remove();
 
         // Define a linear gradients
         const defs = svg.append("defs");
@@ -88,14 +88,12 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
         const title = svg.selectAll('.title').data([selectedProduct]);
         title.enter()
             .append('text')
-            .attr('class', 'title')
+            .attr('class', 'chart-title')
             .attr('x', margin.left)
-            .attr('y', svgHeight * 0.05)
+            .attr('y', 30)
             .merge(title)
             .text("Price over time: " + selectedProduct)
-            .attr('text-anchor', 'left')
-            .style('font-weight', 'bold')
-            .style('fill', 'black');
+
 
         title.exit().remove();
 
@@ -129,7 +127,10 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
             .style('font-weight', 'bold')
             .style('color', fontColor)
             .attr('transform', `translate(0,${svgHeight - margin.bottom})`)
-            .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%Y-%m-%d")))
+            .call(d3.axisBottom(xScale)
+                .tickFormat(d3.timeFormat("%Y-%m-%d"))
+                .ticks(d3.utcMonth.every(4))
+            )
             .selectAll("text")
             .attr("transform", "rotate(-45)")
             .style("text-anchor", "end");
