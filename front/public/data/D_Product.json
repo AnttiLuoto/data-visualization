@@ -15,11 +15,6 @@
         "eanCode": "6438348001566"
     },
     {
-        "productName": "Atria Kanan Ohut Fileeleike Pehme\u00e4n Pippurinen 600g",
-        "productGroup": "Tuore valintaliha",
-        "eanCode": "6407810014397"
-    },
-    {
         "productName": "Semper Fruktmums Persikka 6kk hedelm\u00e4sose 110g",
         "productGroup": "Lastenruoat",
         "eanCode": "7310100703347"
@@ -28,6 +23,11 @@
         "productName": "Semper Fruktmums Vadelma 6kk hedelm\u00e4sose 110g",
         "productGroup": "Lastenruoat",
         "eanCode": "7310100703262"
+    },
+    {
+        "productName": "Atria Kanan Ohut Fileeleike Pehme\u00e4n Pippurinen 600g",
+        "productGroup": "Tuore valintaliha",
+        "eanCode": "6407810014397"
     },
     {
         "productName": "Valio Oltermanni\u00ae e1 kg",
@@ -40,14 +40,14 @@
         "eanCode": "6413605015210"
     },
     {
-        "productName": "Chiquita-banaani",
-        "productGroup": "Hedelm\u00e4t",
-        "eanCode": "2000503600002"
-    },
-    {
         "productName": "Libero Up&Go housuvaippa koko 6, 13-20 kg, 56 kpl",
         "productGroup": "Vauvanvaipat",
         "eanCode": "7322541090580"
+    },
+    {
+        "productName": "Chiquita-banaani",
+        "productGroup": "Hedelm\u00e4t",
+        "eanCode": "2000503600002"
     },
     {
         "productName": "Kotimaista Kanan fileesuikale miedosti suolattu 700 g",
@@ -75,14 +75,14 @@
         "eanCode": "6411300000494"
     },
     {
-        "productName": "HK Popsi\u00ae Grillinakki 300 g",
-        "productGroup": "Tuoreet lihavalmisteet valinta",
-        "eanCode": "6409100060916"
-    },
-    {
         "productName": "Rainbow Kana-tacosalaatti 300g",
         "productGroup": "Valmisruoka valinta",
         "eanCode": "6415712715595"
+    },
+    {
+        "productName": "HK Popsi\u00ae Grillinakki 300 g",
+        "productGroup": "Tuoreet lihavalmisteet valinta",
+        "eanCode": "6409100060916"
     },
     {
         "productName": "Atria Kanan Ohut Fileeleike Mustapippuri 500g",
@@ -95,14 +95,14 @@
         "eanCode": "6410380097752"
     },
     {
-        "productName": "LOTUS Soft Embo wc-paperi 16 rll",
-        "productGroup": "Wc-paperit",
-        "eanCode": "6413200330404"
-    },
-    {
         "productName": "3 Kaveria Vegaaninen Suklaa & P\u00e4hkin\u00e4kinuski j\u00e4\u00e4tel\u00f6 500ml/400g",
         "productGroup": "J\u00e4\u00e4tel\u00f6",
         "eanCode": "6430048443011"
+    },
+    {
+        "productName": "LOTUS Soft Embo wc-paperi 16 rll",
+        "productGroup": "Wc-paperit",
+        "eanCode": "6413200330404"
     },
     {
         "productName": "Jyv\u00e4broiler Iso Suikale Broilerin Fileest\u00e4 Naturelli 330g",
@@ -110,24 +110,9 @@
         "eanCode": "6407830038496"
     },
     {
-        "productName": "Kivikyl\u00e4n Palvarin Lihapy\u00f6rykk\u00e4 350g",
-        "productGroup": "Valmisruoka valinta",
-        "eanCode": "6406300009608"
-    },
-    {
         "productName": "Rainbow miniluumutomaatti 250g",
         "productGroup": "Vihannekset",
         "eanCode": "6414894500210"
-    },
-    {
-        "productName": "Snellman Kinkkusuikaleet 300g",
-        "productGroup": "Tuoreet lihavalmisteet valinta",
-        "eanCode": "6409620364501"
-    },
-    {
-        "productName": "Fazer Aito Kauraruoka 2,5dl gluteeniton kauravalmiste ruoanlaittoon",
-        "productGroup": "Ruoanv ja leivontatuotteet maitotal",
-        "eanCode": "6430015538085"
     },
     {
         "productName": "Kurkku Suomi",
@@ -135,19 +120,19 @@
         "eanCode": "2000604700007"
     },
     {
-        "productName": "2 x Pepsi Max virvoitusjuoma 1,5 l",
-        "productGroup": "Virvoitusjuomat",
-        "eanCode": "6413600015161"
-    },
-    {
         "productName": "TalkMuru aamiaismuro 250 g, Taivalkosken Mylly",
         "productGroup": "Murot ja myslit",
         "eanCode": "6416288111125"
     },
     {
-        "productName": "Rainbow lohifilee 800-1400g vac n10kg",
-        "productGroup": "Tuore kala valinta",
-        "eanCode": "2393064000009"
+        "productName": "Kivikyl\u00e4n Palvarin Lihapy\u00f6rykk\u00e4 350g",
+        "productGroup": "Valmisruoka valinta",
+        "eanCode": "6406300009608"
+    },
+    {
+        "productName": "Fazer Aito Kauraruoka 2,5dl gluteeniton kauravalmiste ruoanlaittoon",
+        "productGroup": "Ruoanv ja leivontatuotteet maitotal",
+        "eanCode": "6430015538085"
     },
     {
         "productName": "Rainbow kirjolohisuikale miedosti suolattu 300g",
@@ -155,14 +140,24 @@
         "eanCode": "6415715101388"
     },
     {
+        "productName": "Rainbow lohifilee 800-1400g vac n10kg",
+        "productGroup": "Tuore kala valinta",
+        "eanCode": "2393064000009"
+    },
+    {
+        "productName": "Snellman Kinkkusuikaleet 300g",
+        "productGroup": "Tuoreet lihavalmisteet valinta",
+        "eanCode": "6409620364501"
+    },
+    {
         "productName": "Fazer Aito Vispi 2,5 dl, gluteeniton vispautuva kasvirasvavalmiste",
         "productGroup": "Ruoanv ja leivontatuotteet maitotal",
         "eanCode": "6430015538108"
     },
     {
-        "productName": "P\u00e4\u00e4ryn\u00e4 Conference I Hollanti",
-        "productGroup": "Hedelm\u00e4t",
-        "eanCode": "2000522100002"
+        "productName": "2 x Pepsi Max virvoitusjuoma 1,5 l",
+        "productGroup": "Virvoitusjuomat",
+        "eanCode": "6413600015161"
     },
     {
         "productName": "Keiju Laktoositon kasvirasvalevite 70 % 600 g",
@@ -170,14 +165,14 @@
         "eanCode": "6438207011620"
     },
     {
+        "productName": "P\u00e4\u00e4ryn\u00e4 Conference I Hollanti",
+        "productGroup": "Hedelm\u00e4t",
+        "eanCode": "2000522100002"
+    },
+    {
         "productName": "Paprika punainen",
         "productGroup": "Vihannekset",
         "eanCode": "2000631800008"
-    },
-    {
-        "productName": "Filos original halloumi-juusto 200g",
-        "productGroup": "Ruokajuustot",
-        "eanCode": "6416710300349"
     },
     {
         "productName": "Jenkki Herra Hakkarainen Mansikka & P\u00e4\u00e4ryn\u00e4 t\u00e4ysksylitolipastilli 150g",
@@ -185,9 +180,9 @@
         "eanCode": "6420256015407"
     },
     {
-        "productName": "Valio salaattijuusto kuutiot 180 g laktoositon",
+        "productName": "Filos original halloumi-juusto 200g",
         "productGroup": "Ruokajuustot",
-        "eanCode": "6408430337613"
+        "eanCode": "6416710300349"
     },
     {
         "productName": "Snellman Superior kinkku 180g",
@@ -195,14 +190,29 @@
         "eanCode": "6409620010057"
     },
     {
+        "productName": "Rainbow Savustettu lohifileepala n 300g",
+        "productGroup": "Kalavalmisteet valinta",
+        "eanCode": "2396004000008"
+    },
+    {
+        "productName": "Valio salaattijuusto kuutiot 180 g laktoositon",
+        "productGroup": "Ruokajuustot",
+        "eanCode": "6408430337613"
+    },
+    {
+        "productName": "Apetit Herne-maissi-porkkana pakaste 200g",
+        "productGroup": "Kasvispakasteet",
+        "eanCode": "6430104920500"
+    },
+    {
         "productName": "Fazer Puikula Kaura 9kpl 550g, kauraleip\u00e4",
         "productGroup": "Vaaleat leiv\u00e4t",
         "eanCode": "6411402202406"
     },
     {
-        "productName": "Rainbow Savustettu lohifileepala n 300g",
-        "productGroup": "Kalavalmisteet valinta",
-        "eanCode": "2396004000008"
+        "productName": "Atria Kanan Minuuttifilee Pehme\u00e4n Pippurinen 760g",
+        "productGroup": "Tuore valintaliha",
+        "eanCode": "6407800010170"
     },
     {
         "productName": "Rainbow 175g Mozzarellajuustoraaste",
@@ -215,16 +225,6 @@
         "eanCode": "6408430037001"
     },
     {
-        "productName": "Apetit Herne-maissi-porkkana pakaste 200g",
-        "productGroup": "Kasvispakasteet",
-        "eanCode": "6430104920500"
-    },
-    {
-        "productName": "Atria Kanan Minuuttifilee Pehme\u00e4n Pippurinen 760g",
-        "productGroup": "Tuore valintaliha",
-        "eanCode": "6407800010170"
-    },
-    {
         "productName": "Rainbow vihre\u00e4 siemenet\u00f6n viiniryp\u00e4le 500 g",
         "productGroup": "Hedelm\u00e4t",
         "eanCode": "6414894500609"
@@ -235,18 +235,18 @@
         "eanCode": "2000041000005"
     },
     {
-        "productName": "Vadelma 125g",
-        "productGroup": "Marjat ja raparperi",
-        "eanCode": "8718226440051"
-    },
-    {
         "productName": "Valio Oddlygood\u00ae kaurapohjainen gurtti 1 kg vadelma",
         "productGroup": "Jogurtti",
         "eanCode": "6408430408313"
     },
     {
-        "productName": "Silvertree kaasugrilli 3 poltinta Trio",
-        "productGroup": "Grillit",
-        "eanCode": "6412989528750"
+        "productName": "Erisan Hajusteeton Biohajoava Pyykinpesuneste 1.5l",
+        "productGroup": "Pyykinhoito",
+        "eanCode": "6417964579178"
+    },
+    {
+        "productName": "Vadelma 125g",
+        "productGroup": "Marjat ja raparperi",
+        "eanCode": "8718226440051"
     }
 ]

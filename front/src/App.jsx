@@ -5,11 +5,14 @@ import DropDown from "./components/Dropdown.jsx";
 import PriceHistoryLine from "./components/PriceHistoryLine.jsx";
 import PriceHistoryLinePercentage from "./components/PriceHistoryLinePercentage.jsx";
 import PriceChangeBar from "./components/PriceChangeBar.jsx";
+import PriceChangeLine from "./components/PriceChangeLineAll.jsx";
+import PriceChangeLineAll from "./components/PriceChangeLineAll.jsx";
 
 function App() {
 
     // Variables for D_Product and F_PriceHistory
     const [priceHistory, setPriceHistory] = useState([])
+    const [priceHistoryQuantiles, setPriceHistoryQuantiles] = useState([])
     const [productAggregates, setProductAggregates] = useState([])
     const [products, setProducts] = useState([])
     const [productNames, setProductNames] = useState([]) // Product names for the dropdown
@@ -28,6 +31,14 @@ function App() {
                 setPriceHistory(data)
             })
             .catch(error => console.error('Error fetching PriceHistory: ', error));
+
+        // PriceHistoryQuantiles
+        fetch('./data/F_PriceHistoryQuantiles.json')
+            .then(response => response.json())
+            .then(data => {
+                setPriceHistoryQuantiles(data)
+            })
+            .catch(error => console.error('Error fetching PriceHistoryQuantiles: ', error));
 
         // Product aggretes
         fetch('./data/F_ProductAggregates.json')
@@ -77,6 +88,14 @@ function App() {
                         <div className="flex justify-center shadow-md rounded-md bg-[#F3F8F8FF] mb-10">
                             {priceHistory.length > 0 ?
                                 <PriceChangeBar data={productAggregates} selectedProduct={selectedProduct} onBarClick={handleProductSelect}/> :
+                                <p>Loading data...</p>}
+                        </div>
+                        <div className="flex justify-center shadow-md rounded-md bg-[#F3F8F8FF] mb-10">
+                            {priceHistory.length > 0 ?
+                                <PriceChangeLineAll priceHistory={priceHistory}
+                                                    priceHistoryQuantiles={priceHistoryQuantiles}
+                                                    selectedProduct={selectedProduct}
+                                                    onBarClick={handleProductSelect}/> :
                                 <p>Loading data...</p>}
                         </div>
                         <div className="grid gap-10 grid-cols-2">

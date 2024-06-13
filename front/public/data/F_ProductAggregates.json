@@ -187,6 +187,17 @@
         "productGroup": "J\u00e4\u00e4tel\u00f6"
     },
     {
+        "eanCode": "6417964579178",
+        "min_price": 5.69,
+        "max_price": 7.65,
+        "first_price": 5.88,
+        "last_price": 7.65,
+        "price_change_percentage": 30.102040816326536,
+        "price_change_\u20ac": 1.7700000000000005,
+        "productName": "Erisan Hajusteeton Biohajoava Pyykinpesuneste 1.5l",
+        "productGroup": "Pyykinhoito"
+    },
+    {
         "eanCode": "6414893500167",
         "min_price": 5.29,
         "max_price": 7.65,
@@ -482,17 +493,6 @@
         "price_change_\u20ac": 0.0,
         "productName": "Fazer Aito Kauraruoka 2,5dl gluteeniton kauravalmiste ruoanlaittoon",
         "productGroup": "Ruoanv ja leivontatuotteet maitotal"
-    },
-    {
-        "eanCode": "6412989528750",
-        "min_price": 229.0,
-        "max_price": 229.0,
-        "first_price": 229.0,
-        "last_price": 229.0,
-        "price_change_percentage": 0.0,
-        "price_change_\u20ac": 0.0,
-        "productName": "Silvertree kaasugrilli 3 poltinta Trio",
-        "productGroup": "Grillit"
     },
     {
         "eanCode": "6408430408313",
