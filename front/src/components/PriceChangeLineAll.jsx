@@ -243,7 +243,7 @@ const PriceChangeLineAll = ({
         svg.append('text')
             .attr('class', 'quantile-label')
             .attr('x', svgWidth - margin.right + 5)
-            .attr('y', yScale(Q25LastVal) + 4)
+            .attr('y', yScale(Q25LastVal) + 8)
             .attr('text-anchor', 'left')
             .style('fill', Q25Color)
             .style('font-size', quantileFontSize)
@@ -252,11 +252,20 @@ const PriceChangeLineAll = ({
         svg.append('text')
             .attr('class', 'quantile-label')
             .attr('x', svgWidth - margin.right + 5)
-            .attr('y', yScale(Q10LastVal) + 4)
+            .attr('y', yScale(Q10LastVal) + 8)
             .attr('text-anchor', 'left')
             .style('fill', Q10Color)
             .style('font-size', quantileFontSize)
             .text('Q10 - Q90');
+
+        svg.append('text')
+            .attr('class', 'quantile-label')
+            .attr('x', svgWidth - margin.right + 5)
+            .attr('y', yScale(yMax) + 15)
+            .attr('text-anchor', 'left')
+            .style('fill', 'rgba(146,143,143,0.53)')
+            .style('font-size', quantileFontSize)
+            .text('Max - Min');
 
         // Crosshairs setup
         const crosshairX = svg.append("line")

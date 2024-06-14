@@ -58,12 +58,12 @@ const PriceChangeBar = ({ data, selectedProduct, onBarClick }) => {
             .attr('class', 'main-chart-title')
             .attr('x', margin.left)
             .attr('y', 30)
-            .text("Overview: Price Change Percentage");
+            .text("Overview: Price Change Percentage: 2019 - 2024 ");
 
         // Instructions
         svg.append('text')
-            .attr('x', svgWidth - margin.right * 2)
-            .attr('y', margin.top * 2)
+            .attr('x', svgWidth - 500)
+            .attr('y', margin.top * 3)
             .style('font-size', 30)
             .style('text-anchor', 'end')
             .style('color', 'red')

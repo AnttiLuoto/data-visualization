@@ -75,7 +75,7 @@ function App() {
         <div className="p-5 bg-white min-h-screen text-gray-900">
             <div className='flex flex-row'>
                 <div className='flex flex-col w-64 border-r-2 p-4'>
-                    <h2 className="font-semibold mb-4">Filtering</h2>
+                    <h2 className="font-semibold mb-4">Product Selection</h2>
                     <div className="mb-10">
                         <DropDown items={productNames} onItemSelect={handleProductSelect}/>
                     </div>
@@ -87,15 +87,7 @@ function App() {
                                 <PriceChangeBar data={productAggregates} selectedProduct={selectedProduct} onBarClick={handleProductSelect}/> :
                                 <p>Loading data...</p>}
                         </div>
-                        <div className="flex justify-center shadow-md rounded-md bg-[#F3F8F8FF] mb-10">
-                            {priceHistory.length > 0 ?
-                                <PriceChangeLineAll priceHistory={priceHistory}
-                                                    priceHistoryQuantiles={priceHistoryQuantiles}
-                                                    selectedProduct={selectedProduct}
-                                                    onBarClick={handleProductSelect}/> :
-                                <p>Loading data...</p>}
-                        </div>
-                        <div className="grid gap-10 grid-cols-2">
+                        <div className="grid gap-10 grid-cols-2 mb-10">
                             {/* PriceHistoryLine and PriceHistoryPercentage should be below PriceChangeBar, and be one col wide */}
                             <div className="flex justify-center col-span-1 shadow-md rounded-md bg-[#F3F8F8FF]">
                                 {priceHistory.length > 0 ?
@@ -108,6 +100,14 @@ function App() {
                                                                 selectedProduct={selectedProduct}/> :
                                     <p>Loading data...</p>}
                             </div>
+                        </div>
+                        <div className="flex justify-center shadow-md rounded-md bg-[#F3F8F8FF] mb-10">
+                            {priceHistory.length > 0 ?
+                                <PriceChangeLineAll priceHistory={priceHistory}
+                                                    priceHistoryQuantiles={priceHistoryQuantiles}
+                                                    selectedProduct={selectedProduct}
+                                                    onBarClick={handleProductSelect}/> :
+                                <p>Loading data...</p>}
                         </div>
                     </div>
                 </div>

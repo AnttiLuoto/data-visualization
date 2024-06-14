@@ -19,7 +19,7 @@ const PriceHistoryLine = ({data, selectedProduct}) => {
         const svgWidth = 800;
         const margin = { top: 50, right: 120, bottom: 75, left: 60 };
         const tooltipSize = 100
-        const lineColor = rootStyles.getPropertyValue('--line-color').trim();
+        const lineColor = rootStyles.getPropertyValue('--bar-line-color').trim();
         const crosshairsColor = rootStyles.getPropertyValue('--crosshairs-color').trim();
         const fontColor = rootStyles.getPropertyValue('--font-color').trim();
         const tooltipColor = rootStyles.getPropertyValue('--tooltip-color').trim();

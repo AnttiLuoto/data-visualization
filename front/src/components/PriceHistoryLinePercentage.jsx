@@ -14,7 +14,7 @@ const PriceHistoryLinePercentage = ({ data, selectedProduct }) => {
         const svgWidth = 700;
         const margin = { top: 50, right: 20, bottom: 75, left: 50 };
         const fontColor = rootStyles.getPropertyValue('--font-color').trim();
-        const lineColor = rootStyles.getPropertyValue('--line-color').trim();
+        const lineColor = rootStyles.getPropertyValue('--bar-line-color').trim();
         const crosshairsColor = rootStyles.getPropertyValue('--crosshairs-color').trim();
         const positiveShadeColor = rootStyles.getPropertyValue('--positive-shade-color').trim();
         const negativeShadeColor = rootStyles.getPropertyValue('--negative-shade-color').trim();
